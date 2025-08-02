@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Payments - Smart Gym Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-brand">
+                <i class="fas fa-dumbbell"></i> Smart Gym
+            </a>
+            <ul class="nav-links">
+                <li><a href="member-dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="member-profile.html"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="member-attendance.html"><i class="fas fa-calendar-check"></i> Attendance</a></li>
+                <li><a href="member-payments.html" class="active"><i class="fas fa-credit-card"></i> Payments</a></li>
+            </ul>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="card">
+            <h1><i class="fas fa-credit-card"></i> My Payments</h1>
+            <p>View your payment history and manage dues</p>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <i class="fas fa-rupee-sign" style="font-size: 2rem; color: #667eea; margin-bottom: 10px;"></i>
+                        <h3>₹15,000</h3>
+                        <label>Total Paid</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <i class="fas fa-check-circle" style="font-size: 2rem; color: #28a745; margin-bottom: 10px;"></i>
+                        <h3>₹3,000</h3>
+                        <label>This Month</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <i class="fas fa-clock" style="font-size: 2rem; color: #ffc107; margin-bottom: 10px;"></i>
+                        <h3>₹0</h3>
+                        <label>Pending</label>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center">
+                        <i class="fas fa-calendar-alt" style="font-size: 2rem; color: #dc3545; margin-bottom: 10px;"></i>
+                        <h3>15 Mar</h3>
+                        <label>Next Due</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Payment Due Soon!</strong> Your next payment of ₹3,000 is due on 15th March 2024.
+                <button class="btn btn-warning" onclick="renewMembership()" style="margin-left: 15px;">Pay Now</button>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-history"></i> Payment History</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Plan</th>
+                            <th>Amount</th>
+                            <th>Method</th>
+                            <th>Status</th>
+                            <th>Receipt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>15 Feb 2024</td>
+                            <td>Premium Plan</td>
+                            <td>₹3,000</td>
+                            <td>UPI</td>
+                            <td><span class="badge badge-success">Paid</span></td>
+                            <td><button class="btn btn-primary">Download</button></td>
+                        </tr>
+                        <tr>
+                            <td>15 Jan 2024</td>
+                            <td>Premium Plan</td>
+                            <td>₹3,000</td>
+                            <td>Cash</td>
+                            <td><span class="badge badge-success">Paid</span></td>
+                            <td><button class="btn btn-primary">Download</button></td>
+                        </tr>
+                        <tr>
+                            <td>15 Dec 2023</td>
+                            <td>Basic Plan</td>
+                            <td>₹1,500</td>
+                            <td>Card</td>
+                            <td><span class="badge badge-success">Paid</span></td>
+                            <td><button class="btn btn-primary">Download</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-credit-card"></i> Make Payment</h3>
+                <p>Renew your membership or pay pending dues</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center" style="cursor: pointer;" onclick="selectPlan('basic')">
+                            <h4>Basic Plan</h4>
+                            <h3 style="color: #667eea;">₹1,500</h3>
+                            <p>30 days</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center" style="cursor: pointer; border: 2px solid #28a745;" onclick="selectPlan('premium')">
+                            <h4>Premium Plan</h4>
+                            <h3 style="color: #28a745;">₹3,000</h3>
+                            <p>30 days</p>
+                            <span class="badge badge-success">Current</span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center" style="cursor: pointer;" onclick="selectPlan('vip')">
+                            <h4>VIP Plan</h4>
+                            <h3 style="color: #ffc107;">₹5,000</h3>
+                            <p>30 days</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-success btn-full" onclick="processPayment()">
+                    <i class="fas fa-credit-card"></i> Proceed to Payment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        let selectedPlan = 'premium';
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+            // Visual feedback for selection
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.border = '1px solid #ddd';
+            });
+            event.currentTarget.style.border = '2px solid #28a745';
+        }
+
+        function renewMembership() {
+            processPayment();
+        }
+
+        function processPayment() {
+            const amounts = {
+                basic: 1500,
+                premium: 3000,
+                vip: 5000
+            };
+            
+            const amount = amounts[selectedPlan];
+            
+            if (confirm(`Process payment of ₹${amount} for ${selectedPlan} plan?`)) {
+                LoadingOverlay.show('Processing payment...');
+                
+                setTimeout(() => {
+                    LoadingOverlay.hide();
+                    NotificationSystem.show('Payment successful! Your membership has been renewed.', 'success');
+                }, 3000);
+            }
+        }
+
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = 'login.html';
+            }
+        }
+    </script>
+</body>
+</html>

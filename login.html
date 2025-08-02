@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Smart Gym Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        .login-container h1 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        .login-type-selector {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #e0e0e0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .login-type-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: #f8f9fa;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 0.9rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-type-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        .login-type-btn:hover::before {
+            left: 100%;
+        }
+        .login-type-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.02);
+        }
+        .login-type-btn:hover:not(.active) {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        .login-info {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+            backdrop-filter: blur(5px);
+        }
+        .login-info h4 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .login-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .demo-credentials {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(32, 201, 151, 0.1));
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #28a745;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .demo-credentials:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2);
+        }
+        .demo-credentials h4 {
+            margin: 0 0 10px 0;
+            color: #155724;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .demo-credentials p {
+            margin: 8px 0;
+            color: #155724;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+        .demo-credentials p:hover {
+            background: rgba(40, 167, 69, 0.1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.95rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: white;
+            transform: translateY(-2px);
+        }
+        .registration-link {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        .registration-link p {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+        .registration-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .registration-link a:hover {
+            color: #764ba2;
+            transform: translateY(-2px);
+        }
+        .hidden {
+            display: none;
+        }
+        .loading {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            .login-container h1 {
+                font-size: 2rem;
+            }
+            .login-type-btn {
+                padding: 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1><i class="fas fa-dumbbell"></i> Smart Gym</h1>
+        <p class="subtitle">Management System</p>
+        
+        <!-- Login Type Selector -->
+        <div class="login-type-selector">
+            <button type="button" class="login-type-btn active" data-type="admin">
+                <i class="fas fa-user-shield"></i> Admin/Staff
+            </button>
+            <button type="button" class="login-type-btn" data-type="member">
+                <i class="fas fa-user"></i> Member
+            </button>
+        </div>
+
+        <!-- Login Info -->
+        <div class="login-info" id="loginInfo">
+            <h4><i class="fas fa-info-circle"></i> Admin Login</h4>
+            <p>Use your admin username and password to access the management system.</p>
+        </div>
+        
+        <form id="loginForm">
+            <input type="hidden" id="loginType" name="loginType" value="admin">
+            
+            <div class="form-group">
+                <label for="username" id="usernameLabel">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" class="btn btn-primary btn-full">
+                <span id="loginText">Login</span>
+                <span id="loginLoading" class="loading hidden"></span>
+            </button>
+        </form>
+        
+        <!-- Demo Credentials -->
+        <div class="demo-credentials" id="demoCredentials">
+            <h4><i class="fas fa-key"></i> Demo Credentials</h4>
+            <p data-type="admin"><strong>Admin:</strong> admin / admin123</p>
+            <p data-type="member"><strong>Member:</strong> 8888888888 / member123</p>
+        </div>
+
+        <!-- Registration Link -->
+        <div class="registration-link">
+            <p>New to our gym?</p>
+            <a href="register.html">
+                <i class="fas fa-user-plus"></i> Create Member Account
+            </a>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        let currentLoginType = 'admin';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            setupLoginTypeSelector();
+            setupDemoCredentials();
+            document.getElementById('username').focus();
+        });
+
+        // Setup login type selector
+        function setupLoginTypeSelector() {
+            const loginTypeBtns = document.querySelectorAll('.login-type-btn');
+            
+            loginTypeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    loginTypeBtns.forEach(b => b.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    // Update login type
+                    currentLoginType = this.dataset.type;
+                    document.getElementById('loginType').value = currentLoginType;
+                    
+                    // Update UI based on login type
+                    updateLoginUI();
+                });
+            });
+        }
+
+        // Update login UI based on type
+        function updateLoginUI() {
+            const loginInfo = document.getElementById('loginInfo');
+            const usernameLabel = document.getElementById('usernameLabel');
+            const usernameInput = document.getElementById('username');
+            
+            if (currentLoginType === 'admin') {
+                loginInfo.innerHTML = `
+                    <h4><i class="fas fa-user-shield"></i> Admin/Staff Login</h4>
+                    <p>Use your admin username and password to access the management system.</p>
+                `;
+                usernameLabel.textContent = 'Username';
+                usernameInput.placeholder = 'Enter your username';
+                usernameInput.type = 'text';
+            } else {
+                loginInfo.innerHTML = `
+                    <h4><i class="fas fa-user"></i> Member Login</h4>
+                    <p>Use your registered mobile number and password to access your member portal.</p>
+                `;
+                usernameLabel.textContent = 'Mobile Number';
+                usernameInput.placeholder = 'Enter your mobile number';
+                usernameInput.type = 'tel';
+            }
+            
+            // Clear form
+            usernameInput.value = '';
+            document.getElementById('password').value = '';
+            usernameInput.focus();
+        }
+
+        // Setup demo credentials
+        function setupDemoCredentials() {
+            const demoCredentials = document.querySelectorAll('.demo-credentials p[data-type]');
+            
+            demoCredentials.forEach(cred => {
+                cred.addEventListener('click', function() {
+                    const type = this.dataset.type;
+                    
+                    // Switch to correct login type
+                    document.querySelector(`[data-type="${type}"]`).click();
+                    
+                    // Fill credentials after UI update
+                    setTimeout(() => {
+                        if (type === 'admin') {
+                            document.getElementById('username').value = 'admin';
+                            document.getElementById('password').value = 'admin123';
+                        } else {
+                            document.getElementById('username').value = '8888888888';
+                            document.getElementById('password').value = 'member123';
+                        }
+                    }, 100);
+                });
+            });
+        }
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const loginText = document.getElementById('loginText');
+            const loginLoading = document.getElementById('loginLoading');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            
+            // Show loading state
+            loginText.classList.add('hidden');
+            loginLoading.classList.remove('hidden');
+            submitBtn.disabled = true;
+            
+            try {
+                const formData = new FormData(this);
+                const data = Object.fromEntries(formData);
+                
+                // Validate form
+                if (!data.username || !data.password) {
+                    throw new Error('Please fill in all fields');
+                }
+                
+                // Validate mobile number for member login
+                if (currentLoginType === 'member') {
+                    if (!/^[6-9]\d{9}$/.test(data.username)) {
+                        throw new Error('Please enter a valid 10-digit mobile number');
+                    }
+                }
+                
+                // Simulate API call (replace with actual API endpoint)
+                const response = await simulateLogin(data, currentLoginType);
+                
+                if (response.success) {
+                    showNotification('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        if (currentLoginType === 'admin') {
+                            window.location.href = 'dashboard.html';
+                        } else {
+                            window.location.href = 'member-dashboard.html';
+                        }
+                    }, 1000);
+                } else {
+                    throw new Error(response.message || 'Login failed');
+                }
+                
+            } catch (error) {
+                showNotification(error.message || 'Login failed. Please try again.', 'error');
+                
+                // Reset loading state
+                loginText.classList.remove('hidden');
+                loginLoading.classList.add('hidden');
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Simulate login for demo (replace with actual API call)
+        async function simulateLogin(data, type) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    if (type === 'admin' && data.username === 'admin' && data.password === 'admin123') {
+                        resolve({ success: true, redirectTo: 'dashboard.html' });
+                    } else if (type === 'member' && data.username === '8888888888' && data.password === 'member123') {
+                        resolve({ success: true, redirectTo: 'member-dashboard.html' });
+                    } else {
+                        resolve({ success: false, message: 'Invalid credentials' });
+                    }
+                }, 1000);
+            });
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                max-width: 300px;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

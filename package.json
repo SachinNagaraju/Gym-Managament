@@ -1,0 +1,28 @@
+{
+  "name": "smart-gym-frontend",
+  "version": "1.0.0",
+  "description": "Smart Gym Management System - Frontend",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'Frontend is ready for deployment'",
+    "dev": "npx serve . -l 3000"
+  },
+  "keywords": [
+    "gym",
+    "management",
+    "fitness",
+    "frontend",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Smart Gym Team",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
